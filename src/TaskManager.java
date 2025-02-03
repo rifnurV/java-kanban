@@ -5,9 +5,9 @@ public class TaskManager {
 
     private int idTask = 1;
 
-    private HashMap<Integer, Task> tasks = new HashMap<>();
-    private HashMap<Integer,Subtask> subTasks = new HashMap<>();
-    private HashMap<Integer,Epic> epics = new HashMap<>();
+    private final HashMap<Integer, Task> tasks = new HashMap<>();
+    private final HashMap<Integer,Subtask> subTasks = new HashMap<>();
+    private final HashMap<Integer,Epic> epics = new HashMap<>();
 
 
     public int getIdTask() {
