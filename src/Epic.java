@@ -25,6 +25,10 @@ public class Epic extends Task{
         subtasksList.add(subtask);
     }
 
+    public void clearSubtasks() {
+        subtasksList.clear();
+    }
+
     @Override
     public String toString() {
         return "Epic{" +

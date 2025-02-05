@@ -28,5 +28,7 @@ public class Main {
         subtask2.setStatus(TaskStatus.DONE);
         manager.updateSubtask(subtask2);
         System.out.println(epic1);
+
+        System.out.println(manager.getSubtasksByEpikId(3));
     }
 }
