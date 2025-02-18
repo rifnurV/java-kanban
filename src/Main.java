@@ -1,34 +1,59 @@
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager manager = new TaskManager();
+        TaskManager manager = Managers.getDefault();
 
-        Task task1 = new Task("Купить картошку","5 мешков");
-        Task task1Add = manager.addTask(task1);
-        System.out.println(task1Add);
+        Task task1 = manager.addTask(new Task("Задача 1", "Купить картошку 5 мешков"));
+        Task task2 = manager.addTask(new Task("Задача 2", "Купить бананов2 кг"));
 
-        Task task2 = new Task("Купить бананов","2 кг");
-        Task task2Add  = manager.addTask(task2);
-        System.out.println(task2Add);
+        Task taskUpdate1 = new Task(task1.getId(), "Задача 1", "Купить апельсинов10 кг", TaskStatus.IN_PROGRESS);
+        Task task2Add11 = manager.updateTask(taskUpdate1);
 
-        Task task2Update = new Task(task2.getId(), "Купить апельсинов","10 кг" , TaskStatus.IN_PROGRESS);
-        Task task2Add11 =  manager.updateTask(task2Update);
-        System.out.println("update "+task2Add11);
-        System.out.println(manager.getTasks());
+        manager.getTaskById(task1.getId());
+        System.out.println("История задачи 1: " + manager.getHistory());
+        manager.getTaskById(task2.getId());
+        System.out.println("История задачи 2: " + manager.getHistory());
+        manager.getTaskById(task2Add11.getId());
 
+        Epic epic1 = manager.addEpic(new Epic("Эпик 1", "1"));
+        Epic epic2 = manager.addEpic(new Epic("Эпик 2", "2"));
+        manager.getEpic(epic1.getId());
+        manager.getEpic(epic2.getId());
+        System.out.println("История эпик: " + manager.getHistory());
 
-        Epic epic1 = new Epic("Эпик 1","1");
-        manager.addEpic(epic1);
-        Subtask subtask1 = new Subtask("Повесить полку","В прихожей",epic1.getId());
-        Subtask subtask2 = new Subtask("Повесить полку","На кухне",epic1.getId());
-        manager.addSubtask(subtask1);
-        manager.addSubtask(subtask2);
-        System.out.println(epic1);
+        Subtask subtask1 = manager.addSubtask(new Subtask("Повесить полку", "В прихожей", epic1.getId()));
+        Subtask subtask2 = manager.addSubtask(new Subtask("Повесить полку", "На кухне", epic1.getId()));
+        manager.getSubtask(subtask1.getId());
+        manager.getSubtask(subtask2.getId());
+        System.out.println("История подзадачи: " + manager.getHistory());
 
         subtask2.setStatus(TaskStatus.DONE);
         manager.updateSubtask(subtask2);
-        System.out.println(epic1);
 
-        System.out.println(manager.getSubtasksByEpikId(3));
+        System.out.println("Все истории: ");
+        printAllTasks(manager);
+    }
+
+    private static void printAllTasks(TaskManager manager) {
+        System.out.println("Задачи:");
+        for (Task task : manager.getTasks()) {
+            System.out.println(task);
+        }
+        System.out.println("Эпики:");
+        for (Task epic : manager.getEpic()) {
+            System.out.println(epic);
+            for (Task task : manager.getSubtasksByEpikId(epic.getId())) {
+                System.out.println("--> " + task);
+            }
+        }
+        System.out.println("Подзадачи:");
+        for (Task subtask : manager.getSubtask()) {
+            System.out.println(subtask);
+        }
+
+        System.out.println("История:");
+        for (Task task : manager.getHistory()) {
+            System.out.println(task);
+        }
     }
 }
