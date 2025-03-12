@@ -1,3 +1,4 @@
+import java.util.Deque;
 import java.util.List;
 
 public interface HistoryManager {
@@ -7,4 +8,6 @@ public interface HistoryManager {
     List<Task> getHistory();
 
     void remove(int id);
+
+
 }
