@@ -32,6 +32,11 @@ public class Main {
 
         System.out.println("Все истории: ");
         printAllTasks(manager);
+
+        System.out.println("Удалить эпик");
+        manager.deleteEpicById(epic1.getId());
+        printAllTasks(manager);
+
     }
 
     private static void printAllTasks(TaskManager manager) {
