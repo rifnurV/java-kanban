@@ -7,7 +7,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks = new HashMap<>();
     private final HashMap<Integer,Subtask> subTasks = new HashMap<>();
     private final HashMap<Integer,Epic> epics = new HashMap<>();
-    private HistoryManager historyManager;
+    private final HistoryManager historyManager;
 
     public InMemoryTaskManager() {
         this.historyManager = Managers.getDefaultHistory();
@@ -94,12 +94,13 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteSubtaskById(int id) {
-        subTasks.remove(id);
-
-        Subtask subtask = subTasks.get(id);
-        int epicId = subtask.getIdEpic();
-
-        Epic epic = epics.get(epicId);
+        Subtask subtask = subTasks.remove(id);
+        if (subtask == null) {
+            return;
+        }
+//        Subtask subtask = subTasks.get(id);
+//        int epicId = subtask.getIdEpic();
+        Epic epic = epics.get(subtask.getIdEpic());
         ArrayList<Subtask> subtaskArrayList = epic.getSubtasksList();
         subtaskArrayList.remove(subtask);
         updateEpicStatus(epic);
@@ -107,11 +108,20 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteEpicById(int id) {
-        ArrayList<Subtask> subtaskArrayList = epics.get(id).getSubtasksList();
-        for (Subtask subtask : subtaskArrayList) {
-            subTasks.remove(subtask);
+        if (epics.containsKey(id)) {
+            Epic epic = epics.get(id);
+            for (Subtask subtask : epic.getSubtasksList()) {
+                subTasks.remove(subtask.getId());
+                historyManager.remove(subtask.getId());
+            }
+            epics.remove(id);
+            historyManager.remove(id);
         }
-        epics.remove(id);
+//        ArrayList<Subtask> subtaskArrayList = epics.get(id).getSubtasksList();
+//        for (Subtask subtask : subtaskArrayList) {
+//            subTasks.remove(subtask);
+//        }
+//        epics.remove(id);
     }
 
     @Override
