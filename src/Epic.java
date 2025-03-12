@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
-public class Epic extends Task{
+public class Epic extends Task {
 
-   private final ArrayList<Subtask>  subtasksList = new ArrayList<>();
+    private final ArrayList<Subtask> subtasksList = new ArrayList<>();
 
     public Epic(int id, String name, String description, TaskStatus status) {
         super(id, name, description, status);
@@ -36,7 +36,7 @@ public class Epic extends Task{
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
-                ", subtasksList = "+subtasksList.toArray()+
+                ", subtasksList = " + subtasksList.toArray() +
                 ", id=" + id +
                 '}';
     }
