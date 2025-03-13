@@ -52,7 +52,6 @@ public class InMemoryTaskManager implements TaskManager {
         for (Epic epic : epics.values()) {
             epic.clearSubtasks();
             epic.setStatus(TaskStatus.NEW);
-
         }
     }
 
@@ -98,8 +97,6 @@ public class InMemoryTaskManager implements TaskManager {
         if (subtask == null) {
             return;
         }
-//        Subtask subtask = subTasks.get(id);
-//        int epicId = subtask.getIdEpic();
         Epic epic = epics.get(subtask.getIdEpic());
         ArrayList<Subtask> subtaskArrayList = epic.getSubtasksList();
         subtaskArrayList.remove(subtask);
@@ -117,11 +114,6 @@ public class InMemoryTaskManager implements TaskManager {
             epics.remove(id);
             historyManager.remove(id);
         }
-//        ArrayList<Subtask> subtaskArrayList = epics.get(id).getSubtasksList();
-//        for (Subtask subtask : subtaskArrayList) {
-//            subTasks.remove(subtask);
-//        }
-//        epics.remove(id);
     }
 
     @Override
@@ -195,7 +187,6 @@ public class InMemoryTaskManager implements TaskManager {
             int epicID = subtask.getIdEpic();
             Subtask oldSubtask = subTasks.get(idSubtask);
             subTasks.replace(idSubtask, subtask);
-            // обновляем подзадачу в списке подзадач эпика и проверяем статус эпика
             Epic epic = epics.get(epicID);
             ArrayList<Subtask> subtaskList = epic.getSubtasksList();
             subtaskList.remove(oldSubtask);
@@ -203,7 +194,6 @@ public class InMemoryTaskManager implements TaskManager {
             epic.updateSubtask(subtask);
             updateEpicStatus(epic);
             return subtask;
-
         }
         return null;
     }
@@ -212,7 +202,6 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
-
 
     private void updateEpicStatus(Epic epic) {
         int countNew = 0;
@@ -239,6 +228,4 @@ public class InMemoryTaskManager implements TaskManager {
     private int getIdTask() {
         return idTask++;
     }
-
-
 }
