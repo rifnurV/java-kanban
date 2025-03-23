@@ -1,3 +1,6 @@
+package managers;
+
+import enums.TaskStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +26,7 @@ public class InMemoryHistoryManagerTest {
     @Test
     void shouldAddTasksToHistory() {
         for (int i = 0; i < 5 ; i++) {
-            Task task = new Task(i,"Task "+i, "Description "+i,TaskStatus.NEW);
+            Task task = new Task(i,"Task "+i, "Description "+i, TaskStatus.NEW);
             historyManager.add(task);
         }
         Assertions.assertEquals(5, historyManager.getHistory().size(),"The task was not added to the history.");
