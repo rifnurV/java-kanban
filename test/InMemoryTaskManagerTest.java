@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,10 +34,40 @@ public class InMemoryTaskManagerTest {
         taskManager.addTask(task1);
         taskManager.addTask(task2);
         assertEquals(2, taskManager.getTasks().size(),"Размер списка должено быть равно 2");
-
-
     }
 
+    @Test
+    void shouldDeleteSubtask(){
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.deleteTaskById(task1.getId());
+        assertEquals(1, taskManager.getTasks().size(),"The size of the list does not match after deletion");
+    }
+
+    @Test
+    void shouldDeleteSubtasks(){
+        Epic epic1 = taskManager.addEpic(new Epic("Эпик 1", "1"));
+        Subtask subtask1 = taskManager.addSubtask(new Subtask("Повесить полку", "В прихожей", epic1.getId()));
+        Subtask subtask2 = taskManager.addSubtask(new Subtask("Повесить полку", "На кухне", epic1.getId()));
+        taskManager.getSubtask(subtask1.getId());
+        taskManager.getSubtask(subtask2.getId());
+
+        taskManager.deleteSubtaskById(subtask1.getId());
+        assertEquals(1, taskManager.getSubtask().size(),"Sub task was incorrectly deleted");
+    }
+
+    @Test
+    void shouldDeleteEpics(){
+        Epic epic1 = taskManager.addEpic(new Epic("Эпик 1", "1"));
+        Subtask subtask1 = taskManager.addSubtask(new Subtask("Повесить полку", "В прихожей", epic1.getId()));
+        Subtask subtask2 = taskManager.addSubtask(new Subtask("Повесить полку", "На кухне", epic1.getId()));
+        taskManager.getSubtask(subtask1.getId());
+        taskManager.getSubtask(subtask2.getId());
+        taskManager.deleteEpicById(epic1.getId());
+
+        assertEquals(0, taskManager.getSubtask().size(),"Not all epics have been deleted");
+
+    }
 
 }
 
