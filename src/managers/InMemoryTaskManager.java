@@ -11,6 +11,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     private int idTask = 1;
 
+    public void setIdTask(int idTask) {
+        this.idTask = idTask;
+    }
+
     private final HashMap<Integer, Task> tasks = new HashMap<>();
     private final HashMap<Integer, Subtask> subTasks = new HashMap<>();
     private final HashMap<Integer, Epic> epics = new HashMap<>();
