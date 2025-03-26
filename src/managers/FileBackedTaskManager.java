@@ -122,12 +122,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 bufferedWriter.write(toString(task));
                 bufferedWriter.newLine();
             }
-            for (Subtask subtask : subtasks) {
-                bufferedWriter.write(toString(subtask));
-                bufferedWriter.newLine();
-            }
             for (Epic epic : epics) {
                 bufferedWriter.write(toString(epic));
+                bufferedWriter.newLine();
+            }
+            for (Subtask subtask : subtasks) {
+                bufferedWriter.write(toString(subtask));
                 bufferedWriter.newLine();
             }
         } catch (IOException e) {
@@ -143,13 +143,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = split[2];
         TaskStatus status = TaskStatus.valueOf(split[3]);
         String description = split[4];
-        int epic = split[5].isEmpty() ? -1 : Integer.parseInt(split[5]);
-
         switch (type) {
             case TASK:
                 return new Task(id, name, description, status);
             case SUBTASK:
-                return new Subtask(id, name, description, status, epic);
+                int epicId = Integer.parseInt(split[5]);
+                return new Subtask(id, name, description, status, epicId);
             case EPIC:
                 return new Epic(id, name, description, status);
             default:

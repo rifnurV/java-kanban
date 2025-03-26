@@ -32,7 +32,7 @@ public class FileBackedTaskManagerTest {
     void saveAndLoadEmptyManager() {
         manager.save();
 
-        FileBackedTaskManager manager = new FileBackedTaskManager(tempFile);
+        FileBackedTaskManager manager = FileBackedTaskManager.loadFromFile(tempFile);
         assertTrue(manager.getTasks().isEmpty(), "The task was not added to the history.");
         assertTrue(manager.getHistory().isEmpty(), "The task was not added to the history.");
         assertTrue(manager.getEpic().isEmpty(), "The epic was not added to the history.");
@@ -42,18 +42,18 @@ public class FileBackedTaskManagerTest {
     @Test
     void saveAndLoadTasks() {
         Task task1 = new Task("Task 1", "Description 1");
-        Epic epic1 = new Epic("Epic 1", "Description 1");
-        Subtask subtask1 = new Subtask("Subtask 1", "Description 1", epic1.getId());
-
         manager.addTask(task1);
-        manager.addTask(epic1);
-        manager.addTask(subtask1);
+        Epic epic1 = new Epic("Epic 1", "Description 1");
+        manager.addEpic(epic1);
+        Subtask subtask1 = new Subtask("Subtask 1", "Description 1", epic1.getId());
+        manager.addSubtask(subtask1);
+        manager.save();
 
-        FileBackedTaskManager manager = new FileBackedTaskManager(tempFile);
+        FileBackedTaskManager loadManager = FileBackedTaskManager.loadFromFile(tempFile);
 
-        List<Task> tasks = manager.getTasks();
-        List<Epic> epics = manager.getEpic();
-        List<Subtask> subtasks = manager.getSubtask();
+        List<Task> tasks = loadManager.getTasks();
+        List<Epic> epics = loadManager.getEpic();
+        List<Subtask> subtasks = loadManager.getSubtask();
 
         assertEquals(1, tasks.size(), "The task was not added to the history.");
         assertEquals("Task 1", tasks.get(0).getName(), "The task was not added to the history.");
@@ -62,7 +62,7 @@ public class FileBackedTaskManagerTest {
         assertEquals("Epic 1", epics.get(0).getName(), "The epic was not added to the history.");
 
         assertEquals(1, subtasks.size(), "The subtask was not added to the history.");
-        assertEquals(epic1.getId(), subtasks.get(0).getId(), "The epic was not added to the history.");
+        assertEquals(epic1.getId(), subtasks.get(0).getIdEpic(), "The epic was not added to the history.");
     }
 
 }
