@@ -6,6 +6,7 @@ import exceptions.ManagerSaveException;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.util.List;
@@ -167,20 +168,26 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             throw new ManagerSaveException("Ошибка чтения файла" + e.getMessage());
         }
 
-        if (content.isEmpty()){return manager;}
+        if (content.isEmpty()) {
+            return manager;
+        }
 
         String[] lines = content.split("\n");
 
-        if (lines.length <= 1){return manager;}
+        if (lines.length <= 1) {
+            return manager;
+        }
 
         for (int i = 1; i < lines.length; i++) {
 
             String line = lines[i].trim();
-            if (line.isEmpty()){continue;}
+            if (line.isEmpty()) {
+                continue;
+            }
 
             Task task = fromString(line);
 
-            if (task.getId() > maxId){
+            if (task.getId() > maxId) {
                 maxId = task.getId();
             }
 
