@@ -99,63 +99,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return newEpic;
     }
 
-    public String toString(Task task) {
-        if (task instanceof Subtask) {
-            Subtask subtask = (Subtask) task;
-            return String.format("%s,%s,%s,%s,%s,%s", task.getId(), task.getType(), task.getName(), task.getStatus(), task.getDescription(), subtask.getIdEpic());
-        } else {
-            return String.format("%s,%s,%s,%s,%s", task.getId(), task.getType(), task.getName(), task.getStatus(), task.getDescription());
-        }
-    }
-
-    public void save() {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
-
-            List<Task> tasks = getTasks();
-            List<Subtask> subtasks = getSubtask();
-            List<Epic> epics = getEpic();
-
-            bufferedWriter.write("id,type,name,status,description,epic");
-            bufferedWriter.newLine();
-
-            for (Task task : tasks) {
-                bufferedWriter.write(toString(task));
-                bufferedWriter.newLine();
-            }
-            for (Epic epic : epics) {
-                bufferedWriter.write(toString(epic));
-                bufferedWriter.newLine();
-            }
-            for (Subtask subtask : subtasks) {
-                bufferedWriter.write(toString(subtask));
-                bufferedWriter.newLine();
-            }
-        } catch (IOException e) {
-            throw new ManagerSaveException("Error saving to a file" + e.getMessage());
-        }
-    }
-
-    private static Task fromString(String value) {
-        String[] split = value.split(",");
-
-        int id = Integer.parseInt(split[0]);
-        TaskType type = TaskType.valueOf(split[1]);
-        String name = split[2];
-        TaskStatus status = TaskStatus.valueOf(split[3]);
-        String description = split[4];
-        switch (type) {
-            case TASK:
-                return new Task(id, name, description, status);
-            case SUBTASK:
-                int epicId = Integer.parseInt(split[5]);
-                return new Subtask(id, name, description, status, epicId);
-            case EPIC:
-                return new Epic(id, name, description, status);
-            default:
-                throw new ManagerSaveException("Invalid task type");
-        }
-    }
-
     public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
 
@@ -204,6 +147,33 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return manager;
     }
 
+    private void save() {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+
+            List<Task> tasks = getTasks();
+            List<Subtask> subtasks = getSubtask();
+            List<Epic> epics = getEpic();
+
+            bufferedWriter.write("id,type,name,status,description,epic");
+            bufferedWriter.newLine();
+
+            for (Task task : tasks) {
+                bufferedWriter.write(toString(task));
+                bufferedWriter.newLine();
+            }
+            for (Epic epic : epics) {
+                bufferedWriter.write(toString(epic));
+                bufferedWriter.newLine();
+            }
+            for (Subtask subtask : subtasks) {
+                bufferedWriter.write(toString(subtask));
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            throw new ManagerSaveException("Error saving to a file" + e.getMessage());
+        }
+    }
+
     public void setMaxId(int maxId) {
         setIdTask(maxId);
     }
@@ -240,6 +210,36 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         System.out.println("Subtasks:");
         for (Task subtask : manager.getSubtask()) {
             System.out.println(subtask);
+        }
+    }
+
+    private String toString(Task task) {
+        if (task instanceof Subtask) {
+            Subtask subtask = (Subtask) task;
+            return String.format("%s,%s,%s,%s,%s,%s", task.getId(), task.getType(), task.getName(), task.getStatus(), task.getDescription(), subtask.getIdEpic());
+        } else {
+            return String.format("%s,%s,%s,%s,%s", task.getId(), task.getType(), task.getName(), task.getStatus(), task.getDescription());
+        }
+    }
+
+    private static Task fromString(String value) {
+        String[] split = value.split(",");
+
+        int id = Integer.parseInt(split[0]);
+        TaskType type = TaskType.valueOf(split[1]);
+        String name = split[2];
+        TaskStatus status = TaskStatus.valueOf(split[3]);
+        String description = split[4];
+        switch (type) {
+            case TASK:
+                return new Task(id, name, description, status);
+            case SUBTASK:
+                int epicId = Integer.parseInt(split[5]);
+                return new Subtask(id, name, description, status, epicId);
+            case EPIC:
+                return new Epic(id, name, description, status);
+            default:
+                throw new ManagerSaveException("Invalid task type");
         }
     }
 }

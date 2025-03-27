@@ -30,7 +30,6 @@ public class FileBackedTaskManagerTest {
 
     @Test
     void saveAndLoadEmptyManager() {
-        manager.save();
 
         FileBackedTaskManager manager = FileBackedTaskManager.loadFromFile(tempFile);
         assertTrue(manager.getTasks().isEmpty(), "The task was not added to the history.");
@@ -47,7 +46,6 @@ public class FileBackedTaskManagerTest {
         manager.addEpic(epic1);
         Subtask subtask1 = new Subtask("Subtask 1", "Description 1", epic1.getId());
         manager.addSubtask(subtask1);
-        manager.save();
 
         FileBackedTaskManager loadManager = FileBackedTaskManager.loadFromFile(tempFile);
 
