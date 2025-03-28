@@ -147,33 +147,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return manager;
     }
 
-    private void save() {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
-
-            List<Task> tasks = getTasks();
-            List<Subtask> subtasks = getSubtask();
-            List<Epic> epics = getEpic();
-
-            bufferedWriter.write("id,type,name,status,description,epic");
-            bufferedWriter.newLine();
-
-            for (Task task : tasks) {
-                bufferedWriter.write(toString(task));
-                bufferedWriter.newLine();
-            }
-            for (Epic epic : epics) {
-                bufferedWriter.write(toString(epic));
-                bufferedWriter.newLine();
-            }
-            for (Subtask subtask : subtasks) {
-                bufferedWriter.write(toString(subtask));
-                bufferedWriter.newLine();
-            }
-        } catch (IOException e) {
-            throw new ManagerSaveException("Error saving to a file" + e.getMessage());
-        }
-    }
-
     public void setMaxId(int maxId) {
         setIdTask(maxId);
     }
@@ -240,6 +213,33 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 return new Epic(id, name, description, status);
             default:
                 throw new ManagerSaveException("Invalid task type");
+        }
+    }
+
+    private void save() {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+
+            List<Task> tasks = getTasks();
+            List<Subtask> subtasks = getSubtask();
+            List<Epic> epics = getEpic();
+
+            bufferedWriter.write("id,type,name,status,description,epic");
+            bufferedWriter.newLine();
+
+            for (Task task : tasks) {
+                bufferedWriter.write(toString(task));
+                bufferedWriter.newLine();
+            }
+            for (Epic epic : epics) {
+                bufferedWriter.write(toString(epic));
+                bufferedWriter.newLine();
+            }
+            for (Subtask subtask : subtasks) {
+                bufferedWriter.write(toString(subtask));
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            throw new ManagerSaveException("Error saving to a file" + e.getMessage());
         }
     }
 }
