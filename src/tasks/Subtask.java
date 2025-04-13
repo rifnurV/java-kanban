@@ -2,9 +2,6 @@ package tasks;
 
 import enums.TaskStatus;
 import enums.TaskType;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Subtask extends Task {
@@ -30,7 +27,7 @@ public class Subtask extends Task {
     @Override
     public String toString() {
         String startTime ="";
-        if (startTime != "") {
+        if (startTime.isEmpty()) {
             startTime = getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyy HH:mm"));
         }
 

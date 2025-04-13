@@ -1,6 +1,5 @@
 package managers;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
@@ -14,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager>  {
 
     @BeforeEach
-    void beforeEach() throws IOException {
+    void beforeEach() {
         taskManager = new InMemoryTaskManager();
         historyManager = Managers.getDefaultHistory();
         taskManager.setHistoryManager(historyManager);

@@ -115,7 +115,7 @@ public class Task {
     @Override
     public String toString() {
         String startTime ="";
-        if (startTime != "") {
+        if (startTime.isEmpty()) {
             startTime = getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyy HH:mm"));
         }
 
