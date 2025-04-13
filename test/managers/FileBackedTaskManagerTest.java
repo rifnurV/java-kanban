@@ -27,6 +27,11 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
         tempFile.delete();
     }
 
+    @Override
+    protected FileBackedTaskManager createTaskManager() {
+        return new FileBackedTaskManager(tempFile);
+    }
+
     @Test
     void saveAndLoadEmptyManager() {
 
