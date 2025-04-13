@@ -5,16 +5,29 @@ import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Main {
 
     public static void main(String[] args) {
+        inMemoryTaskManagerCreator();
+
+    }
+
+    private static void inMemoryTaskManagerCreator() {
+        LocalDateTime nowTime = LocalDateTime.now();
+        Duration oneHour = Duration.ofHours(1);
+
         TaskManager manager = Managers.getDefault();
 
         Task task1 = manager.addTask(new Task("Задача 1", "Купить картошку 5 мешков"));
         Task task2 = manager.addTask(new Task("Задача 2", "Купить бананов2 кг"));
 
-        Task taskUpdate1 = new Task(task1.getId(), "Задача 1", "Купить апельсинов10 кг", TaskStatus.IN_PROGRESS);
-        Task task2Add11 = manager.updateTask(taskUpdate1);
+        task2.setDescription("Купить апельсинов10 кг");
+        task2.setStatus(TaskStatus.IN_PROGRESS);
+//        Task taskUpdate1 = new Task("Задача 1", "Купить апельсинов10 кг", TaskStatus.IN_PROGRESS,nowTime,oneHour);
+        Task task2Add11 = manager.updateTask(task2);
 
         manager.getTaskById(task1.getId());
         System.out.println("История задачи 1: " + manager.getHistory());
@@ -43,7 +56,6 @@ public class Main {
         System.out.println("Удалить эпик");
         manager.deleteEpicById(epic1.getId());
         printAllTasks(manager);
-
     }
 
     private static void printAllTasks(TaskManager manager) {

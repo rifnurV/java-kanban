@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
+
+    HistoryManager getHistoryManager();
+
+    void setHistoryManager(HistoryManager manager);
+
     ArrayList<Task> getTasks();
 
     ArrayList<Subtask> getSubtask();
@@ -48,5 +53,5 @@ public interface TaskManager {
 
     List<Task> getHistory();
 
-
+    List<Task> getPrioritizedTasks();
 }

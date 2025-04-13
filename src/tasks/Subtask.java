@@ -3,6 +3,10 @@ package tasks;
 import enums.TaskStatus;
 import enums.TaskType;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Subtask extends Task {
 
     private final int idEpic;
@@ -25,12 +29,24 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
+        String startTime ="";
+        if (startTime != "") {
+            startTime = getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyy HH:mm"));
+        }
+
+        long durationLong = 0;
+        if (getDuration() != null) {
+            durationLong = getDuration().toMinutes();
+        }
+
         return "Subtask{" +
                 "idEpic=" + idEpic +
                 " name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 ", id=" + id +
+                ", start time=" + startTime +
+                ", duration=" + durationLong +
                 '}';
     }
 }

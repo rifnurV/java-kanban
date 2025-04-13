@@ -8,6 +8,7 @@ import tasks.Task;
 
 public class InMemoryHistoryManagerTest {
 
+    private TaskManager manager;
     private HistoryManager historyManager;
 
     @BeforeEach
@@ -31,7 +32,6 @@ public class InMemoryHistoryManagerTest {
             historyManager.add(task);
         }
         Assertions.assertEquals(5, historyManager.getHistory().size(),"The task was not added to the history.");
-//        Assertions.assertNotNull(historyManager.getHistory().get(0),"The task was not added to the history.");
     }
 
     @Test
@@ -60,6 +60,5 @@ public class InMemoryHistoryManagerTest {
         historyManager.add(task1);
         historyManager.add(task2);
         Assertions.assertEquals(2, historyManager.getHistory().size(),"The task was not added to the history.");
-
     }
 }

@@ -3,6 +3,9 @@ package tasks;
 import enums.TaskStatus;
 import enums.TaskType;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Task {
@@ -11,6 +14,8 @@ public class Task {
     protected String description;
     protected TaskStatus status;
     protected TaskType type;
+    protected Duration duration;
+    protected LocalDateTime startTime;
 
     public int getId() {
         return id;
@@ -52,6 +57,33 @@ public class Task {
         this.type = type;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime != null && duration != null ? startTime.plus(duration) : null;
+    }
+
+    public boolean isOverlapTasks(Task other) {
+        if (other == null || this.startTime == null || other.startTime == null) {
+            return false;
+        }
+        return this.startTime.isBefore(other.startTime) && other.getStartTime().isBefore(this.startTime);
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
     public Task(int id, String name, String description, TaskStatus status) {
         this.id = id;
         this.name = name;
@@ -82,11 +114,23 @@ public class Task {
 
     @Override
     public String toString() {
+        String startTime ="";
+        if (startTime != "") {
+            startTime = getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyy HH:mm"));
+        }
+
+        long durationLong = 0;
+        if (getDuration() != null) {
+            durationLong = getDuration().toMinutes();
+        }
+
         return "Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 ", id=" + id +
+                ", start time=" + startTime +
+                ", duration=" + durationLong +
                 '}';
     }
 }
