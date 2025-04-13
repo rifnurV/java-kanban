@@ -26,7 +26,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        String startTime ="";
+        String startTime = "";
         if (startTime.isEmpty()) {
             startTime = getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyy HH:mm"));
         }
