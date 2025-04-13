@@ -2,6 +2,7 @@ package tasks;
 
 import enums.TaskStatus;
 import enums.TaskType;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -43,11 +44,11 @@ public class Epic extends Task {
     }
 
     public void addSubtask(Subtask subtask) {
-       for (Subtask subtask1 : subtasksList) {
-           if (subtask.isOverlapTasks(subtask1)){
-               throw new IllegalArgumentException("Subtask already overlaps with " + subtask1);
-           }
-       }
+        for (Subtask subtask1 : subtasksList) {
+            if (subtask.isOverlapTasks(subtask1)) {
+                throw new IllegalArgumentException("Subtask already overlaps with " + subtask1);
+            }
+        }
         subtasksList.add(subtask);
     }
 
