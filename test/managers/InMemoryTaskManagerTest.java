@@ -4,13 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
 import tasks.Subtask;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager>  {
+public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
     @BeforeEach
     void beforeEach() {
@@ -40,7 +41,7 @@ public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager
     }
 
     @Test
-    void shouldDeleteEpics(){
+    void shouldDeleteEpics() {
         Epic epic1 = taskManager.addEpic(new Epic("Эпик 1", "1"));
         Subtask subtask1 = taskManager.addSubtask(new Subtask("Повесить полку", "В прихожей", epic1.getId()));
         Subtask subtask2 = taskManager.addSubtask(new Subtask("Повесить полку", "На кухне", epic1.getId()));
@@ -48,7 +49,7 @@ public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager
         taskManager.getSubtask(subtask2.getId());
         taskManager.deleteEpicById(epic1.getId());
 
-        assertEquals(0, taskManager.getSubtask().size(),"Not all epics have been deleted");
+        assertEquals(0, taskManager.getSubtask().size(), "Not all epics have been deleted");
 
     }
 
