@@ -44,7 +44,7 @@ public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager
     }
 
     @Test
-    void shouldDeleteEpics() {
+    void shouldDeleteEpics1() {
         Epic epic1 = taskManager.addEpic(new Epic("Эпик 1", "1"));
         Subtask subtask1 = taskManager.addSubtask(new Subtask("Повесить полку", "В прихожей", epic1.getId()));
         Subtask subtask2 = taskManager.addSubtask(new Subtask("Повесить полку", "На кухне", epic1.getId()));
@@ -54,6 +54,86 @@ public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager
 
         assertEquals(0, taskManager.getSubtask().size(), "Not all epics have been deleted");
 
+    }
+
+    @Test
+    void shouldNewTaskAdd(){
+        addTask();
+    }
+
+    @Test
+    void shouldAddSubtask(){
+        addSubtask();
+    }
+
+    @Test
+    void shouldAddEpic(){
+        addEpic();
+    }
+
+    @Test
+    void shouldGetTasks(){
+        getTasks();
+    }
+
+    @Test
+    void shouldGetSubtask(){
+        getSubtask();
+    }
+
+    @Test
+    void shouldGetEpics(){
+        getEpics();
+    }
+
+    @Test
+    void shouldGetTaskById(){
+        getTaskById();
+    }
+
+    @Test
+    void shouldGetSubtaskById(){
+        getSubtaskById();
+    }
+
+    @Test
+    void shouldGetEpicById(){
+        getEpicById();
+    }
+
+    @Test
+    void shouldDeleteTask(){
+        deleteTasks();
+    }
+
+    @Test
+    void shouldDeleteSubtasks(){
+        deleteSubtasks();
+    }
+
+    @Test
+    void shouldDeleteEpics(){
+        deleteEpics();
+    }
+
+    @Test
+    void shouldDeleteTaskByID(){
+        deleteTaskByID();
+    }
+
+    @Test
+    void shouldDeleteEpicById(){
+        deleteEpicById();
+    }
+
+    @Test
+    void shouldUpdateSubtask(){
+        updateSubtask();
+    }
+
+    @Test
+    void shouldUpdateTask(){
+        updateTask();
     }
 
 }
