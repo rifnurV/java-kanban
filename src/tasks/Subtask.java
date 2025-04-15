@@ -27,24 +27,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        String startTime = "";
-        if (startTime.isEmpty()) {
-            startTime = getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyy HH:mm"));
-        }
-
-        long durationLong = 0;
-        if (getDuration() != null) {
-            durationLong = getDuration().toMinutes();
-        }
-
-        return "Subtask{" +
-                "idEpic=" + idEpic +
-                " name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", id=" + id +
-                ", start time=" + startTime +
-                ", duration=" + durationLong +
-                '}';
+        String taskStirng = super.toString();
+        return taskStirng +", idEpic " + idEpic;
     }
 }

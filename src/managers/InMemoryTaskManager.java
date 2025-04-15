@@ -5,6 +5,7 @@ import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -206,6 +207,7 @@ public class InMemoryTaskManager implements TaskManager {
                 }
             }
             updateEpicStatus(epic);
+            setTimeForEpic(epic);
             return epic;
         }
         return null;
@@ -271,6 +273,9 @@ public class InMemoryTaskManager implements TaskManager {
         LocalDateTime aEnd = a.getEndTime();
         LocalDateTime bStart = b.getStartTime();
         LocalDateTime bEnd = b.getEndTime();
+        if (a == null || b == null) {
+            return false;
+        }
 
         return aStart.isBefore(bEnd) && bStart.isBefore(aEnd);
     }
@@ -289,5 +294,23 @@ public class InMemoryTaskManager implements TaskManager {
                         },
                         () -> sortTasks.add(newTask)
                 );
+    }
+
+    private void setTimeForEpic(Epic epic) {
+        if ( !epic.getSubtasksList().isEmpty() ) {
+            LocalDateTime startTime = LocalDateTime.MAX;
+            LocalDateTime endTime = LocalDateTime.MIN;
+            for (Subtask subtask : epic.getSubtasksList()) {
+                if (subtask.getStartTime().isBefore(startTime)) {
+                    startTime = subtask.getStartTime();
+                }
+                if (subtask.getEndTime().isAfter(endTime)) {
+                    endTime = subtask.getEndTime();
+                }
+                epic.setStartTime(startTime);
+                epic.setEndTime(endTime);
+                epic.setDuration(Duration.between(startTime, endTime));
+            }
+        }
     }
 }

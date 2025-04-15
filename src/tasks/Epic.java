@@ -37,10 +37,7 @@ public class Epic extends Task {
 
     @Override
     public LocalDateTime getEndTime() {
-        return subtasksList.stream()
-                .map(subtask -> subtask.getStartTime().plus(subtask.getDuration()))
-                .max(LocalDateTime::compareTo)
-                .orElse(null);
+        return endTime;
     }
 
     public void addSubtask(Subtask subtask) {
@@ -71,13 +68,6 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" +
-                "subtasks=" + subtasksList +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", subtasksList = " + subtasksList.toArray() +
-                ", id=" + id +
-                '}';
+        return  super.toString();
     }
 }

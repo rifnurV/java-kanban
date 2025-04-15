@@ -21,10 +21,15 @@ public class Main {
 
         TaskManager manager = Managers.getDefault();
 
-        Task task1 = manager.addTask(new Task("Задача 1", "Купить картошку 5 мешков"));
-        Task task2 = manager.addTask(new Task("Задача 2", "Купить бананов2 кг"));
-
+        Task task1 = new Task("Задача 1", "Купить картошку 5 мешков");
+        task1.setDuration(oneHour);
+        task1.setStartTime(nowTime);
+        manager.addTask(task1);
+        Task task2 = new Task("Задача 2", "Купить бананов2 кг");
+        task2.setDuration(oneHour);
+        task2.setStartTime(nowTime.plusHours(2));
         task2.setDescription("Купить апельсинов10 кг");
+        manager.addTask(task2);
         task2.setStatus(TaskStatus.IN_PROGRESS);
 //        Task taskUpdate1 = new Task("Задача 1", "Купить апельсинов10 кг", TaskStatus.IN_PROGRESS,nowTime,oneHour);
         Task task2Add11 = manager.updateTask(task2);
@@ -36,13 +41,15 @@ public class Main {
         manager.getTaskById(task2Add11.getId());
 
         Epic epic1 = manager.addEpic(new Epic("Эпик 1", "1"));
-        Epic epic2 = manager.addEpic(new Epic("Эпик 2", "2"));
-        manager.getEpic(epic1.getId());
-        manager.getEpic(epic2.getId());
-        System.out.println("История эпик: " + manager.getHistory());
 
-        Subtask subtask1 = manager.addSubtask(new Subtask("Повесить полку", "В прихожей", epic1.getId()));
-        Subtask subtask2 = manager.addSubtask(new Subtask("Повесить полку", "На кухне", epic1.getId()));
+        Subtask subtask1 = new Subtask("Повесить полку", "В прихожей", epic1.getId());
+        subtask1.setDuration(oneHour);
+        subtask1.setStartTime(nowTime.plusHours(3));
+        manager.addSubtask(subtask1);
+        Subtask subtask2 = new Subtask("Повесить полку", "На кухне", epic1.getId());
+        subtask2.setDuration(oneHour);
+        subtask2.setStartTime(nowTime.plusHours(4));
+        manager.addSubtask(subtask2);
         manager.getSubtask(subtask1.getId());
         manager.getSubtask(subtask2.getId());
         System.out.println("История подзадачи: " + manager.getHistory());
