@@ -297,7 +297,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void setTimeForEpic(Epic epic) {
-        if ( !epic.getSubtasksList().isEmpty() ) {
+        if (!epic.getSubtasksList().isEmpty()) {
             LocalDateTime startTime = LocalDateTime.MAX;
             LocalDateTime endTime = LocalDateTime.MIN;
             for (Subtask subtask : epic.getSubtasksList()) {
