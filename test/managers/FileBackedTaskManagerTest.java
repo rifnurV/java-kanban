@@ -8,6 +8,8 @@ import tasks.Subtask;
 import tasks.Task;
 
 import java.io.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,10 +47,14 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
     @Test
     void saveAndLoadTasks() {
         Task task1 = new Task("Задача", "Описание задачи");
+        task1.setStartTime(LocalDateTime.now());
+        task1.setDuration(Duration.ofMinutes(5));
         taskManager.addTask(task1);
         Epic epic1 = new Epic("Эпик", "Описание  эпика");
         taskManager.addEpic(epic1);
         Subtask subtask1 = new Subtask("Подзадача", "Описание подзадачи", epic1.getId());
+        subtask1.setStartTime(LocalDateTime.now().plusHours(1));
+        subtask1.setDuration(Duration.ofMinutes(5));
         taskManager.addSubtask(subtask1);
 
         FileBackedTaskManager loadManager = FileBackedTaskManager.loadFromFile(tempFile);

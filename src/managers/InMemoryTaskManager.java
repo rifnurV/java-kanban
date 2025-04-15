@@ -173,6 +173,7 @@ public class InMemoryTaskManager implements TaskManager {
         subTasks.put(idSubtask, subtask);
         if (subtask.getStartTime() != null) {
             addTaskWihtOverlap(subtask);
+            setTimeForEpic(epic);
         }
         return subtask;
     }

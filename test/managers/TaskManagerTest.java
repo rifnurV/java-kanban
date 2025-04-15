@@ -8,6 +8,8 @@ import tasks.Subtask;
 import tasks.Task;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public abstract class TaskManagerTest<T extends TaskManager> {
     protected T taskManager;
@@ -32,6 +34,8 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         Epic epic = new Epic("Эпик", "Описание эпика");
         taskManager.addEpic(epic);
         Subtask subTask = new Subtask("Подзадача", "Описание подзадачи", epic.getId());
+        subTask.setStartTime(LocalDateTime.now());
+        subTask.setDuration(Duration.ofMinutes(5));
         taskManager.addSubtask(subTask);
         Assertions.assertEquals(1, taskManager.getSubtask().size());
     }
@@ -58,9 +62,13 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         Epic epic = new Epic("Эпик", "Описание эпика");
         taskManager.addEpic(epic);
         Subtask subTask = new Subtask("Подзадача", "Описание подзадачи", epic.getId());
+        subTask.setStartTime(LocalDateTime.now());
+        subTask.setDuration(Duration.ofMinutes(5));
         taskManager.addSubtask(subTask);
         Assertions.assertEquals(1, taskManager.getSubtask().size());
         Subtask subTask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", epic.getId());
+        subTask2.setStartTime(LocalDateTime.now().plusMinutes(15));
+        subTask2.setDuration(Duration.ofMinutes(5));
         taskManager.addSubtask(subTask2);
         Assertions.assertEquals(2, taskManager.getSubtask().size());
     }
@@ -86,6 +94,8 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         Epic epic = new Epic("Эпик", "Описание эпика");
         taskManager.addEpic(epic);
         Subtask subTask = new Subtask("Подзадача", "Описание подзадачи", epic.getId());
+        subTask.setStartTime(LocalDateTime.now());
+        subTask.setDuration(Duration.ofMinutes(5));
         taskManager.addSubtask(subTask);
         Assertions.assertEquals(subTask, taskManager.getSubtask(subTask.getId()));
     }
@@ -113,8 +123,12 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         Epic epic = new Epic("Эпик", "Описание эпика");
         taskManager.addEpic(epic);
         Subtask subTask = new Subtask("Подзадача", "Описание подзадачи", epic.getId());
+        subTask.setStartTime(LocalDateTime.now());
+        subTask.setDuration(Duration.ofMinutes(5));
         taskManager.addSubtask(subTask);
         Subtask subTask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", epic.getId());
+        subTask2.setStartTime(LocalDateTime.now().plusMinutes(10));
+        subTask2.setDuration(Duration.ofMinutes(5));
         taskManager.addSubtask(subTask2);
         Assertions.assertEquals(2, taskManager.getSubtask().size());
         taskManager.deleteSubtask();
@@ -164,6 +178,8 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         Epic epic = new Epic("Эпик", "Описание эпика");
         taskManager.addEpic(epic);
         Subtask subTask = new Subtask("Подзадача", "Описание подзадачи", epic.getId());
+        subTask.setStartTime(LocalDateTime.now());
+        subTask.setDuration(Duration.ofMinutes(5));
         taskManager.addSubtask(subTask);
         Assertions.assertEquals(1, taskManager.getSubtask().size());
         subTask.setDescription("описание подзадачи изменили");
