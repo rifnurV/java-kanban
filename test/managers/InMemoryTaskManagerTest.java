@@ -1,5 +1,12 @@
+package managers;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InMemoryTaskManagerTest {
@@ -26,7 +33,7 @@ public class InMemoryTaskManagerTest {
     void shouldAddSubtask(){
         taskManager.addTask(task1);
         taskManager.addTask(task2);
-        assertNotEquals(task1.getId(), task2.getId(),"Задачи должны быть разными");
+        Assertions.assertNotEquals(task1.getId(), task2.getId(),"Задачи должны быть разными");
     }
 
     @Test
