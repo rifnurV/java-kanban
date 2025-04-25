@@ -16,7 +16,7 @@ public class Task {
     protected TaskType type;
     protected Duration duration;
     protected LocalDateTime startTime;
-    public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyy HH:mm");
+    public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public int getId() {
         return id;
@@ -100,6 +100,15 @@ public class Task {
         this.type = TaskType.TASK;
     }
 
+    public Task(String name, String description, TaskStatus status, Duration duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.type = TaskType.TASK;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,9 +129,9 @@ public class Task {
             startTime = getStartTime().format(dateTimeFormatter);
         }
 
-        String durationString = "";
+        long durationString = 0;
         if (getDuration() != null) {
-            durationString = String.valueOf(getDuration().toMinutes());
+            durationString = getDuration().toMinutes();
         }
 
         return "Task{" +
