@@ -1,6 +1,7 @@
 package managers;
 
 import tasks.Task;
+
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
@@ -9,7 +10,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node<Task> head;
     private Node<Task> tail;
     private int size = 0;
-
 
     public class Node<T> {
 
