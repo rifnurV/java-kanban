@@ -130,7 +130,6 @@ public class HttpTaskManagerTasksTest {
 
         // проверяем, что создалась одна задача с корректным именем
         List<Task> tasksFromManager = manager.getTasks();
-//        List<Task> parsed = gson.fromJson(response.body(), new TaskListTypeToken().getType());
 
         assertNotNull(tasksFromManager, "Задачи не возвращаются");
         assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");

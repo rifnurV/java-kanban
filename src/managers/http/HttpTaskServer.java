@@ -18,38 +18,6 @@ public class HttpTaskServer {
     private HttpServer server;
     private TaskManager taskManager;
 
-    public static void main(String[] args) throws IOException {
-        TaskManager taskManager = Managers.getDefault();
-
-        LocalDateTime nowTime = LocalDateTime.now();
-        Duration oneHour = Duration.ofHours(1);
-        Task task1 = new Task("Задача 1", "Купить картошку 5 мешков");
-        task1.setDuration(oneHour);
-        task1.setStartTime(nowTime);
-        taskManager.addTask(task1);
-        Task task2 = new Task("Задача 2", "Купить бананов2 кг");
-        task2.setDuration(oneHour);
-        task2.setStartTime(nowTime.plusHours(2));
-        task2.setDescription("Купить апельсинов10 кг");
-        taskManager.addTask(task2);
-        task2.setStatus(TaskStatus.IN_PROGRESS);
-        Epic epic1 = taskManager.addEpic(new Epic("Эпик 1", "1"));
-
-        Subtask subtask1 = new Subtask("Повесить полку", "В прихожей", epic1.getId());
-        subtask1.setDuration(oneHour);
-        subtask1.setStartTime(nowTime.plusHours(3));
-        taskManager.addSubtask(subtask1);
-        Subtask subtask2 = new Subtask("Повесить полку", "На кухне", epic1.getId());
-        subtask2.setDuration(oneHour);
-        subtask2.setStartTime(nowTime.plusHours(4));
-        taskManager.addSubtask(subtask2);
-
-        HistoryManager historyManager = Managers.getDefaultHistory();
-        taskManager.setHistoryManager(historyManager);
-        HttpTaskServer taskServer = new HttpTaskServer(taskManager);
-        taskServer.start();
-    }
-
     public HttpTaskServer(TaskManager taskManager) {
         this.taskManager = taskManager;
         try {
